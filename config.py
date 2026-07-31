@@ -1,0 +1,11 @@
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+DOCUMENTINTELLIGENCE_ENDPOINT = os.getenv("DOCUMENTINTELLIGENCE_ENDPOINT")
+DOCUMENTINTELLIGENCE_API_KEY = os.getenv("DOCUMENTINTELLIGENCE_API_KEY")
+
+if not DOCUMENTINTELLIGENCE_ENDPOINT or not DOCUMENTINTELLIGENCE_API_KEY:
+    raise ValueError("Missing Azure credentials. Please check DOCUMENTINTELLIGENCE_ENDPOINT and DOCUMENTINTELLIGENCE_API_KEY in the .env file.")
