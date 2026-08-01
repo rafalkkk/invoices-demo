@@ -1,5 +1,6 @@
 from azure_client import create_document_intelligence_client
 from azure.ai.documentintelligence.models import AnalyzeResult, AnalyzeDocumentRequest
+from io import BytesIO
 
 
 def analyze_invoice_from_file(file_path: str) -> AnalyzeResult:
@@ -15,6 +16,16 @@ def analyze_invoice_from_url(file_url: str) -> AnalyzeResult:
     client = create_document_intelligence_client()
 
     poller = client.begin_analyze_document(model_id="prebuilt-invoice", body=AnalyzeDocumentRequest(url_source=file_url))
+
+    return poller.result()
+
+
+def analyze_invoice_from_bytes(file_bytes: bytes) -> AnalyzeResult:
+    client = create_document_intelligence_client()
+
+    file_stream = BytesIO(file_bytes)
+
+    poller = client.begin_analyze_document(model_id="prebuilt-invoice", body=file_stream)
 
     return poller.result()
 
